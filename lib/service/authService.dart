@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:chatnest/components/modals/customAlertModal.dart';
-import 'package:dio/dio.dart';
+import 'package:chatnest/service/chatService.dart';
+import 'package:dio/dio.dart' as Dio;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -14,7 +15,7 @@ class AuthService extends GetxService {
   String usersUrl = "${dotenv.env['baseApi']}/users";
 
   late bool loggin = false;
-  Dio dio = new Dio();
+  Dio.Dio dio = new Dio.Dio();
   @override
   void onInit() {
     super.onInit();
@@ -42,9 +43,10 @@ class AuthService extends GetxService {
       if (response.statusCode != 201) {
         return false;
       }
+      ChatService.to.connect();
       return true;
     } catch (error) {
-      Get.dialog(CustomAlertModal(
+      await Get.dialog(CustomAlertModal(
         msg: "에러",
         title: "실수",
       ));
@@ -59,21 +61,28 @@ class AuthService extends GetxService {
       required XFile profile,
       required String nickName}) async {
     String device_token = "12341541";
-    String login_url = "${usersUrl}/";
-    var body = {
-      "email": email,
-      "password": password,
-      "device_token": device_token
-    };
+    String signurl = "${usersUrl}/";
+    var formData = Dio.FormData.fromMap({
+      'email': email,
+      'password': password,
+      'profile': await Dio.MultipartFile.fromFile(profile.path,
+          filename: profile.name.toLowerCase()),
+      'device_token': device_token,
+      'nickName': nickName
+    });
+
     try {
-      final response = await dio.post(login_url, data: body);
+      final response = await dio.post(signurl, data: formData);
       print(response);
       if (response.statusCode != 201) {
         return false;
       }
       return true;
     } catch (error) {
-      print(error);
+      await Get.dialog(CustomAlertModal(
+        msg: "API Error",
+        title: "${error}",
+      ));
       return false;
     }
   }

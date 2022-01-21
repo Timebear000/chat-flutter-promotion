@@ -2,6 +2,8 @@ import 'package:chatnest/screen/auth/login/controller/login_controller.dart';
 import 'package:chatnest/screen/auth/login/view/login_screen.dart';
 import 'package:chatnest/screen/auth/signup/controller/signup_controller.dart';
 import 'package:chatnest/screen/auth/signup/view/signup_screen.dart';
+import 'package:chatnest/screen/core/controller/core_controller.dart';
+import 'package:chatnest/screen/core/view/core_layout.dart';
 import 'package:get/get.dart';
 
 part 'app_routes.dart';
@@ -12,15 +14,15 @@ class AppPages {
   static const INITIAL = Routes.LOGIN;
 
   static final routes = [
-    // GetPage(
-    //   name: _Paths.HOME,
-    //   page: () => HomeScreen(),
-    //   binding: BindingsBuilder(
-    //     () => Get.lazyPut<HomeController>(
-    //       () => HomeController(),
-    //     ),
-    //   ),
-    // ),
+    GetPage(
+      name: _Paths.Core,
+      page: () => CoreHomeScreen(),
+      binding: BindingsBuilder(
+        () => Get.lazyPut<CoreController>(
+          () => CoreController(),
+        ),
+      ),
+    ),
     GetPage(
       name: _Paths.LOGIN,
       page: () => LoginScreen(),

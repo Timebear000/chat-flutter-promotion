@@ -29,13 +29,17 @@ class SignUpController extends GetxController {
   TextEditingController passwordController = new TextEditingController();
   TextEditingController nickNameController = new TextEditingController();
 
-  Future<void> SignUpScreen() async {
-    // var respone = await AuthService.to
-    //     .sign(email: emailController.text, password: passwordController.text);
+  Future<void> SignUpProcess() async {
+    var respone = await AuthService.to.signup(
+        email: emailController.text,
+        password: passwordController.text,
+        nickName: nickNameController.text,
+        profile: file!);
   }
 
   Future<void> LoadAssetsImage() async {
     String error = 'No Error Detected';
+    print(1234);
     try {
       XFile? imagepicker =
           await ImagePicker().pickImage(source: ImageSource.gallery);

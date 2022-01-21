@@ -1,3 +1,4 @@
+import 'package:chatnest/routes/app_page.dart';
 import 'package:chatnest/screen/auth/login/controller/login_controller.dart';
 import 'package:chatnest/styles/color.dart';
 import 'package:email_validator/email_validator.dart';
@@ -122,6 +123,9 @@ class LoginScreen extends GetView<LoginController> {
                       ),
                     ),
                     GestureDetector(
+                      onTap: () {
+                        Get.toNamed(Routes.Register);
+                      },
                       child: Container(
                         decoration: BoxDecoration(
                           color: AppColor.buttonBackgroundColorDark,

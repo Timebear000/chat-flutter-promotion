@@ -1,3 +1,4 @@
+import 'package:chatnest/routes/app_page.dart';
 import 'package:chatnest/service/authService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -18,6 +19,7 @@ class LoginController extends GetxController {
   Future<void> LoginProcess() async {
     var respone = await AuthService.to
         .sign(email: emailController.text, password: passwordController.text);
+    if (respone) Get.toNamed(Routes.Core);
   }
 
   bool get onLogin => emailValable.value && passwordValiable.value;

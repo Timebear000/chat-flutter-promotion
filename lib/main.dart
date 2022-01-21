@@ -1,6 +1,7 @@
 import 'package:chatnest/binding/init_binding.dart';
 import 'package:chatnest/routes/app_page.dart';
 import 'package:chatnest/service/authService.dart';
+import 'package:chatnest/service/chatService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -29,6 +30,7 @@ Future<void> main() async {
 Future<void> initService() async {
   // Auth Service
   await Get.putAsync(() async => await AuthService());
+  await Get.putAsync(() async => await ChatService());
 }
 
 class MyApp extends StatefulWidget {
