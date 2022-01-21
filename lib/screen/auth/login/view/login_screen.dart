@@ -22,9 +22,9 @@ class LoginScreen extends GetView<LoginController> {
             children: [
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                padding: EdgeInsets.symmetric(horizontal: 30.w),
                 child: Text(
-                  "Chat Login",
+                  "Chat Message App",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20.sp,
@@ -54,7 +54,8 @@ class LoginScreen extends GetView<LoginController> {
                   },
                 ),
               ),
-              Obx(() => !controller.email
+              Obx(() => !controller.email &&
+                      controller.emailController.text.length != 0
                   ? Container(
                       padding: EdgeInsets.only(left: 20.w),
                       child: Text('email is not valiable',
@@ -84,7 +85,8 @@ class LoginScreen extends GetView<LoginController> {
                   },
                 ),
               ),
-              Obx(() => !controller.password
+              Obx(() => !controller.password &&
+                      controller.passwordController.text.length != 0
                   ? Container(
                       padding: EdgeInsets.only(left: 20.w),
                       child: Text('password is not valiable min 4 length',

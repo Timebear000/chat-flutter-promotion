@@ -11,5 +11,5 @@ abstract class Routes {
 abstract class _Paths {
   static const HOME = '/home';
   static const LOGIN = '/login';
-  static const Register = '/register';
+  static const Register = '/signup';
 }

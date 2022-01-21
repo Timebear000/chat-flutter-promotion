@@ -1,5 +1,7 @@
 import 'package:chatnest/screen/auth/login/controller/login_controller.dart';
 import 'package:chatnest/screen/auth/login/view/login_screen.dart';
+import 'package:chatnest/screen/auth/signup/controller/signup_controller.dart';
+import 'package:chatnest/screen/auth/signup/view/signup_screen.dart';
 import 'package:get/get.dart';
 
 part 'app_routes.dart';
@@ -28,14 +30,14 @@ class AppPages {
         ),
       ),
     ),
-    // GetPage(
-    //   name: _Paths.Register,
-    //   page: () => RegisterScreen(),
-    //   binding: BindingsBuilder(
-    //     () => Get.lazyPut<RegisterController>(
-    //       () => RegisterController(),
-    //     ),
-    //   ),
-    // ),
+    GetPage(
+      name: _Paths.Register,
+      page: () => SignUpScreen(),
+      binding: BindingsBuilder(
+        () => Get.lazyPut<SignUpController>(
+          () => SignUpController(),
+        ),
+      ),
+    ),
   ];
 }

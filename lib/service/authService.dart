@@ -1,14 +1,18 @@
 import 'dart:async';
 
+import 'package:chatnest/components/modals/customAlertModal.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService extends GetxService {
   static AuthService get to => Get.find();
   late SharedPreferences _storage;
   String authUrl = "${dotenv.env['baseApi']}/auth";
+  String usersUrl = "${dotenv.env['baseApi']}/users";
+
   late bool loggin = false;
   Dio dio = new Dio();
   @override
@@ -27,6 +31,35 @@ class AuthService extends GetxService {
   Future<bool> sign({required String email, required String password}) async {
     String device_token = "12341541";
     String login_url = "${authUrl}/sign";
+    var body = {
+      "email": email,
+      "password": password,
+      "device_token": device_token
+    };
+    try {
+      final response = await dio.post(login_url, data: body);
+      print(response);
+      if (response.statusCode != 201) {
+        return false;
+      }
+      return true;
+    } catch (error) {
+      Get.dialog(CustomAlertModal(
+        msg: "에러",
+        title: "실수",
+      ));
+      print(error);
+      return false;
+    }
+  }
+
+  Future<bool> signup(
+      {required String email,
+      required String password,
+      required XFile profile,
+      required String nickName}) async {
+    String device_token = "12341541";
+    String login_url = "${usersUrl}/";
     var body = {
       "email": email,
       "password": password,
