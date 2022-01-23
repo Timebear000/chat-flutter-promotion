@@ -47,7 +47,10 @@
 	<string>사용자 컨텐츠에 사진 등록기능을 제공합니다</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>사용자 컨텐츠에 사진 등록기능을 제공합니다</string>
-	<key>com.apple.security.network.client</key>
-	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>

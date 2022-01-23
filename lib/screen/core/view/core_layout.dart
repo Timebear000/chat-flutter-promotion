@@ -25,19 +25,37 @@ class CoreHomeScreen extends GetView<CoreController> {
             SizedBox(height: 5.w),
             Container(
               width: double.infinity,
-              child: Row(
-                children: [
-                  Text("My", style: AppTextStyle.SelectedCategory),
-                  SizedBox(width: 10.w),
-                  Text("Rooms", style: AppTextStyle.SelectedNotCategory),
-                ],
-              ),
+              child: Obx(() => Row(
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            controller.setTap(0);
+                          },
+                          child: Container(
+                              child: Text("My",
+                                  style: controller.tap == 0
+                                      ? AppTextStyle.SelectedCategory
+                                      : AppTextStyle.SelectedNotCategory))),
+                      SizedBox(width: 10.w),
+                      GestureDetector(
+                        onTap: () {
+                          controller.setTap(1);
+                        },
+                        child: Container(
+                            child: Text("Rooms",
+                                style: controller.tap == 1
+                                    ? AppTextStyle.SelectedCategory
+                                    : AppTextStyle.SelectedNotCategory)),
+                      ),
+                    ],
+                  )),
               padding: EdgeInsets.symmetric(vertical: 5.w, horizontal: 20.w),
             ),
+            SizedBox(height: 10.w),
             Container(
                 color: AppColor.bodyColor, width: double.infinity, height: 1.w),
-            SizedBox(height: 10.w),
-            Expanded(child: Container())
+            SizedBox(height: 5.w),
+            Expanded(child: Obx(() => controller.View()))
           ],
         ),
       ),

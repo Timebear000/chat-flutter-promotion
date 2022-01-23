@@ -6,10 +6,12 @@ abstract class Routes {
   static const Core = _Paths.Core;
   static const LOGIN = _Paths.LOGIN;
   static const Register = _Paths.Register;
+  static const Chat = _Paths.Chat;
 }
 
 abstract class _Paths {
   static const Core = '/home';
   static const LOGIN = '/login';
   static const Register = '/signup';
+  static const Chat = "/chat";
 }

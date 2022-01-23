@@ -17,7 +17,8 @@ class AuthService extends GetxService {
   late bool loggin = false;
   Dio.Dio dio = new Dio.Dio();
   @override
-  void onInit() {
+  void onInit() async {
+    _storage = await SharedPreferences.getInstance();
     super.onInit();
   }
 
@@ -43,7 +44,8 @@ class AuthService extends GetxService {
       if (response.statusCode != 201) {
         return false;
       }
-      ChatService.to.connect();
+      ChatService.to.connect(response.data['result']['uid']);
+      setToken(response.data['result']['uid']);
       return true;
     } catch (error) {
       await Get.dialog(CustomAlertModal(
