@@ -1,4 +1,5 @@
 import 'package:chatnest/models/chat/Room.dart';
+import 'package:chatnest/models/chat/roomMessage.dart';
 import 'package:chatnest/service/authService.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
@@ -76,6 +77,21 @@ class ChatProvider extends GetConnect {
     print("Result : :${response.body["result"]}");
     Room result = Room.fromJson(response.body["result"]);
 
+    return result;
+  }
+
+  // MessageListOne
+  Future<List<RoomMessage>> MessageListGet({required String room_id}) async {
+    String url = "/messageList?room_id=${room_id}";
+    String token = await AuthService.to.getToken();
+    Response response = await get(url, headers: {"x_token": token});
+    if (response.hasError) {
+      // throw new Exception(response.body['message']);
+      return [];
+    }
+    // print("Result : :${response.body["result"]}");
+    List<RoomMessage> result = List.from(response.body["result"]['messages']
+        .map((x) => RoomMessage.fromJson(x)));
     return result;
   }
 }

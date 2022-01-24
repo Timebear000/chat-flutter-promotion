@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:chatnest/connects/chatProvider.dart';
 import 'package:chatnest/models/chat/Room.dart';
+import 'package:chatnest/models/chat/roomMessage.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -19,7 +20,7 @@ class ChatService extends GetxService {
   void connect(String uid) async {
     try {
       socket = await IO.io(
-          "http://192.168.0.213:3000/room?uid=${uid}",
+          "http://192.168.1.7:3000/room?uid=${uid}",
           IO.OptionBuilder()
               .setTransports(["websocket"])
               .disableAutoConnect() // disable auto-connection
@@ -57,6 +58,10 @@ class ChatService extends GetxService {
 
   Future<Room> RoomInfo({required String room_id}) async {
     return await ChatProvider.to.RoomInfo(room_id: room_id);
+  }
+
+  Future<List<RoomMessage>> MessageListGet({required String room_id}) async {
+    return await ChatProvider.to.MessageListGet(room_id: room_id);
   }
 
   @override

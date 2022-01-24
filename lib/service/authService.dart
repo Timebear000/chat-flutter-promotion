@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:chatnest/components/modals/customAlertModal.dart';
+import 'package:chatnest/models/auth/MyData.dart';
 import 'package:chatnest/service/chatService.dart';
 import 'package:dio/dio.dart' as Dio;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -11,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthService extends GetxService {
   static AuthService get to => Get.find();
   late SharedPreferences _storage;
+  late UserMyData user;
   String authUrl = "${dotenv.env['baseApi']}/auth";
   String usersUrl = "${dotenv.env['baseApi']}/users";
 
@@ -44,6 +46,7 @@ class AuthService extends GetxService {
       if (response.statusCode != 201) {
         return false;
       }
+      user = UserMyData.fromJson(response.data['result']);
       ChatService.to.connect(response.data['result']['uid']);
       setToken(response.data['result']['uid']);
       return true;
