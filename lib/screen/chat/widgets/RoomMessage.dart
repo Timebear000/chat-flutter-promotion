@@ -75,7 +75,7 @@ class RoomMessageWidget extends StatelessWidget {
                         child: Container(
                             padding: EdgeInsets.all(8.w),
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: Color(0xffd09760),
                               borderRadius: BorderRadius.only(
                                 topRight: Radius.zero,
                                 topLeft: Radius.circular(8.w),
@@ -86,7 +86,7 @@ class RoomMessageWidget extends StatelessWidget {
                             child: Text(
                               message.message,
                               style: TextStyle(
-                                color: Color(0xff333333),
+                                color: Colors.white,
                                 fontSize: 13.sp,
                               ),
                             ))),
