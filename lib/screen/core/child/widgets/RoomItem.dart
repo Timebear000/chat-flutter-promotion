@@ -60,19 +60,22 @@ class RoomItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.w),
-                    decoration: BoxDecoration(
-                      color: Colors.blueGrey,
-                      borderRadius: BorderRadius.all(Radius.circular(10.w)),
-                    ),
-                    child: Text(this.item.messages.toString(),
-                        style: TextStyle(
-                          fontSize: 13.sp,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                        ))),
+                this.item.messages != 0
+                    ? Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 5.w, vertical: 2.w),
+                        decoration: BoxDecoration(
+                          color: Colors.blueGrey,
+                          borderRadius: BorderRadius.all(Radius.circular(10.w)),
+                        ),
+                        child: Text(this.item.messages.toString(),
+                            style: TextStyle(
+                              fontSize: 13.sp,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
+                            )))
+                    : Container(),
+                //Todo : Time Settings
                 Container(
                   child:
                       Text(this.item.updatedAt.toIso8601String().split("T")[0],

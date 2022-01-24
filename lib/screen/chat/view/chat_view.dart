@@ -20,7 +20,7 @@ class ChatView extends GetView<ChatController> {
             icon: Icon(Icons.arrow_back_ios, color: Colors.black87)),
         backgroundColor: Colors.white,
         title: Text(
-          "채팅방 이름",
+          controller.room_name,
           style: TextStyle(color: Colors.black87),
         ),
       ),
@@ -72,8 +72,14 @@ class ChatView extends GetView<ChatController> {
                                     nextitem.createdAt.hour * 100 +
                                         nextitem.createdAt.minute * 1;
 
-                                firstChild = itemTimeCount != nextTimeCount &&
-                                    item.ownner.uid == nextitem.ownner.uid;
+                                firstChild = item.type != "system" &&
+                                        item.ownner.uid !=
+                                            nextitem.ownner.uid ||
+                                    itemTimeCount != nextTimeCount;
+                                if (nextitem.type == "system")
+                                  firstChild = true;
+                                // firstChild = true;
+
                               }
                               if (index != 0) {
                                 RoomMessage previtem =
@@ -89,8 +95,12 @@ class ChatView extends GetView<ChatController> {
                                     previtem.createdAt.hour * 100 +
                                         previtem.createdAt.minute * 1;
 
-                                lastChild = itemTimeCount != prevTimeCount &&
-                                    item.ownner.uid == previtem.ownner.uid;
+                                lastChild = item.type != "system" &&
+                                        item.ownner.uid !=
+                                            previtem.ownner.uid ||
+                                    itemTimeCount != prevTimeCount;
+
+                                if (previtem.type == "system") lastChild = true;
                               }
 
                               return Column(
@@ -203,7 +213,9 @@ class ChatView extends GetView<ChatController> {
           Obx(
             () => Container(
               child: InkWell(
-                onTap: () async {},
+                onTap: () async {
+                  controller.MessageSend();
+                },
                 child: Container(
                   margin: EdgeInsets.only(bottom: 5.w),
                   width: 45.w,

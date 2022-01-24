@@ -26,6 +26,8 @@ class RoomMessageWidget extends StatelessWidget {
 
   // Owner Message
   Container _MyMessage() {
+    int notReadCount =
+        message.onReadUser.where((element) => element.onRead == false).length;
     return Container(
         alignment: Alignment.centerRight,
         width: double.infinity,
@@ -42,17 +44,19 @@ class RoomMessageWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Container(
-                      alignment: Alignment.bottomLeft,
-                      child: Text(
-                        "${message.onReadUser.where((element) => element.onRead == false).length}",
-                        style: TextStyle(
-                          color: Colors.amber,
-                          fontSize: 9.sp,
-                          fontFamily: 'NotoSansKR',
-                        ),
-                      ),
-                    ),
+                    notReadCount != 0
+                        ? Container(
+                            alignment: Alignment.bottomLeft,
+                            child: Text(
+                              "${notReadCount}",
+                              style: TextStyle(
+                                color: Colors.amber,
+                                fontSize: 9.sp,
+                                fontFamily: 'NotoSansKR',
+                              ),
+                            ),
+                          )
+                        : Container(),
                     SizedBox(width: 7.w),
                     lastChild
                         ? Container(
@@ -128,6 +132,8 @@ class RoomMessageWidget extends StatelessWidget {
 
   // Near  Message
   Container _NearUserMessage() {
+    int notReadCount =
+        message.onReadUser.where((element) => element.onRead == false).length;
     return Container(
         alignment: Alignment.centerLeft,
         width: double.infinity,
@@ -203,17 +209,19 @@ class RoomMessageWidget extends StatelessWidget {
                           )
                         : Container(),
                     SizedBox(width: 7.w),
-                    Container(
-                      alignment: Alignment.bottomLeft,
-                      child: Text(
-                        "${message.onReadUser.where((element) => element.onRead == false).length}",
-                        style: TextStyle(
-                          color: Colors.amber,
-                          fontSize: 9.sp,
-                          fontFamily: 'NotoSansKR',
-                        ),
-                      ),
-                    )
+                    notReadCount != 0
+                        ? Container(
+                            alignment: Alignment.bottomLeft,
+                            child: Text(
+                              "${notReadCount}",
+                              style: TextStyle(
+                                color: Colors.amber,
+                                fontSize: 9.sp,
+                                fontFamily: 'NotoSansKR',
+                              ),
+                            ),
+                          )
+                        : Container()
                   ],
                 ),
               ],

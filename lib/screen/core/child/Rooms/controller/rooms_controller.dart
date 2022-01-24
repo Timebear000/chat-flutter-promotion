@@ -31,10 +31,12 @@ class RoomsController extends GetxController {
   }
 
   // Chat Room Join
-  Future<void> roomJoin({required String room_id}) async {
+  Future<void> roomJoin(
+      {required String room_id, required String room_name}) async {
     socket.emit("join", {'room_id': room_id});
     print('${Routes.Chat}/${room_id}');
-    await Get.toNamed('${Routes.Chat}/${room_id}');
+    await Get.toNamed('${Routes.Chat}/${room_id}',
+        arguments: {"room_name": room_name});
   }
 
   Future<void> onCreateRoom() async {

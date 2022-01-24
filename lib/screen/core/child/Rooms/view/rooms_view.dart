@@ -21,7 +21,9 @@ class RoomListView extends GetView<RoomsController> {
                               onTap: () async {
                                 print(controller.rooms[index].id);
                                 await controller.roomJoin(
-                                    room_id: controller.rooms[index].id);
+                                    room_id: controller.rooms[index].id,
+                                    room_name:
+                                        controller.rooms[index].roomName);
                               },
                               child: RoomInfo(item: controller.rooms[index])))
                       .toList()

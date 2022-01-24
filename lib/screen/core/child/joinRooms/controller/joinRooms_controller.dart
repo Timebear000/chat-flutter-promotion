@@ -1,5 +1,6 @@
 import 'package:chatnest/components/modals/customAlertModal.dart';
 import 'package:chatnest/models/chat/Room.dart';
+import 'package:chatnest/routes/app_page.dart';
 import 'package:chatnest/service/chatService.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -21,6 +22,15 @@ class JoinRoomsController extends GetxController {
     List<Room> result = await ChatService.to.FindMyRooms();
     print(result.length);
     rooms.assignAll(result);
+  }
+
+  Future<void> roomJoin(
+      {required String room_id, required String room_name}) async {
+    socket.emit("join", {'room_id': room_id});
+    print('${Routes.Chat}/${room_id}');
+    await Get.toNamed('${Routes.Chat}/${room_id}',
+        arguments: {"room_name": room_name});
+    // todo : 해당 룸을 찾고 다시 업데이트 필요
   }
 
   void ChatRoomUpdate(data) async {

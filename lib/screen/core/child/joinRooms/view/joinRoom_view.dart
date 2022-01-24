@@ -13,8 +13,15 @@ class JoinListView extends GetView<JoinRoomsController> {
             padding: EdgeInsets.zero,
             shrinkWrap: true,
             children: [
-              ...List.generate(controller.rooms.length,
-                  (index) => RoomItem(item: controller.rooms[index])).toList()
+              ...List.generate(
+                  controller.rooms.length,
+                  (index) => InkWell(
+                      onTap: () async {
+                        await controller.roomJoin(
+                            room_id: controller.rooms[index].id,
+                            room_name: controller.rooms[index].roomName);
+                      },
+                      child: RoomItem(item: controller.rooms[index]))).toList()
             ],
           )
         : Center(child: Text("참가한 방이 없습니다.\n Rooms에서 참가해주세요.!")));
