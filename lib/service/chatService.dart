@@ -20,7 +20,7 @@ class ChatService extends GetxService {
   void connect(String uid) async {
     try {
       socket = await IO.io(
-          "http://192.168.1.7:3000/room?uid=${uid}",
+          "http://192.168.0.213:3000/room?uid=${uid}",
           IO.OptionBuilder()
               .setTransports(["websocket"])
               .disableAutoConnect() // disable auto-connection

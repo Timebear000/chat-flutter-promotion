@@ -40,7 +40,6 @@ class ChatController extends GetxController {
       "message": messageController.text
     };
     socket.emit("SendMessage", message);
-    // print(1234);
     messageController.clear();
     SendOn(false);
   }
@@ -48,7 +47,6 @@ class ChatController extends GetxController {
   SendMessageSuccess(data) {
     RoomMessage message = RoomMessage.fromJson(data);
     messages.add(message);
-    update();
   }
 
   Future<void> MessageGets() async {
@@ -62,10 +60,8 @@ class ChatController extends GetxController {
     String room_id = Get.parameters['room_id']!;
     var send = {"room_id": room_id};
     socket.emit("ReadMessage", send);
-    print("메세지 받음");
     RoomMessage message = RoomMessage.fromJson(data);
     messages.add(message);
-    update();
   }
 
   NewUserEvent(data) {
@@ -75,16 +71,6 @@ class ChatController extends GetxController {
   }
 
   RoomJoinUser(data) {
-    // messages.map((item) {
-    //   item.onReadUser.map((e) {
-    //     if (e.user == data && e.onRead == false) {
-    //       e.onRead = true;
-    //     }
-    //     return e;
-    //   });
-    //   return item;
-    // });
-    print("ReadUser : ${data}");
     for (RoomMessage value in messages) {
       for (OnReadUser value2 in value.onReadUser) {
         if (value2.user == data && value2.onRead == false) {
@@ -93,15 +79,16 @@ class ChatController extends GetxController {
       }
     }
     messages.refresh();
-    update();
   }
 
   @override
   void onClose() {
-    super.onClose();
+    String room_id = Get.parameters['room_id']!;
     socket.off('NewUser');
     socket.off("SendMessageSuccess");
     socket.off("userInto");
     socket.off("MessageReceive");
+    socket.emit("Roomleave", room_id);
+    super.onClose();
   }
 }
