@@ -62,7 +62,7 @@ class RoomMessageWidget extends StatelessWidget {
                         ? Container(
                             alignment: Alignment.bottomLeft,
                             child: Text(
-                              "${message.createdAt.hour}:${message.createdAt.minute}",
+                              _displayTime(),
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 9.sp,
@@ -199,7 +199,7 @@ class RoomMessageWidget extends StatelessWidget {
                         ? Container(
                             alignment: Alignment.bottomLeft,
                             child: Text(
-                              "${message.createdAt.hour}:${message.createdAt.minute}",
+                              _displayTime(),
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 9.sp,
@@ -228,5 +228,26 @@ class RoomMessageWidget extends StatelessWidget {
             ),
           ],
         ));
+  }
+
+  String _displayTime() {
+    DateTime createAt = this.message.createdAt;
+    String Hource;
+    String Min;
+    String After;
+    if (createAt.hour <= 11) {
+      After = "오전";
+      Hource = createAt.hour == 0 ? "12" : "${createAt.hour}";
+    } else {
+      After = "오후";
+      Hource = createAt.hour == 12 ? "12" : "${createAt.hour - 12}";
+    }
+
+    if (createAt.minute <= 9) {
+      Min = createAt.minute == 0 ? "00" : "0${createAt.minute}";
+    } else {
+      Min = "${createAt.minute}";
+    }
+    return "${After} ${Hource}:${Min}";
   }
 }

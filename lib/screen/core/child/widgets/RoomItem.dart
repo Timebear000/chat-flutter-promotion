@@ -77,13 +77,12 @@ class RoomItem extends StatelessWidget {
                     : Container(),
                 //Todo : Time Settings
                 Container(
-                  child:
-                      Text(this.item.updatedAt.toIso8601String().split("T")[0],
-                          style: TextStyle(
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white,
-                          )),
+                  child: Text(_display(),
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                      )),
                 ),
               ],
             ),
@@ -92,5 +91,31 @@ class RoomItem extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String _display() {
+    DateTime today = DateTime.now();
+    DateTime createAt = this.item.lastMessage!.createdAt;
+
+    String hour = createAt.hour <= 11
+        ? "오전 ${createAt.hour}"
+        : createAt.hour != 12
+            ? "오후 ${createAt.hour - 12}"
+            : "오후 ${createAt.hour}";
+    String minute =
+        createAt.minute > 10 ? "${createAt.minute}" : "0${createAt.minute}";
+    String day = createAt.day > 10 ? "${createAt.day}" : "0${createAt.day}";
+    String month =
+        createAt.month > 10 ? "${createAt.month}" : "0${createAt.month}";
+    if (today.year != createAt.year) {
+      return "${createAt.year}. ${month}. ${day}";
+    }
+    if (today.year == createAt.year &&
+        today.month == createAt.month &&
+        today.day == createAt.day) {
+      return " ${hour}:${minute}";
+    }
+
+    return " ${createAt.month}월 ${day}일";
   }
 }

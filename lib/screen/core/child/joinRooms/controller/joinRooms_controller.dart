@@ -31,18 +31,18 @@ class JoinRoomsController extends GetxController {
     await Get.toNamed('${Routes.Chat}/${room_id}',
         arguments: {"room_name": room_name});
     // todo : 해당 룸을 찾고 다시 업데이트 필요
+    await ChatRoomUpdate(room_id);
   }
 
-  void ChatRoomUpdate(data) async {
+  Future<void> ChatRoomUpdate(data) async {
     // rooms 삭제
-    print(data);
-    rooms.removeWhere((item) => item.id == data);
-    update();
+    int index = rooms.indexWhere((item) => item.id == data);
     try {
       Room item = await ChatService.to.RoomInfo(room_id: data);
-      // print(item.toJson());
-      rooms.insert(0, item);
-      // rooms.sort();
+      rooms[index] = item;
+      rooms.sort((a, b) =>
+          b.lastMessage!.createdAt.compareTo(a.lastMessage!.createdAt));
+      rooms.refresh();
       update();
     } catch (error) {
       await Get.dialog(CustomAlertModal(
