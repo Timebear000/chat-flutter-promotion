@@ -85,6 +85,7 @@ class ChatController extends GetxController {
     //   return item;
     // });
     print("ReadUser : ${data}");
+    print("해당 유저가 이메일을 읽었대요 ${data}");
     for (RoomMessage value in messages) {
       for (OnReadUser value2 in value.onReadUser) {
         if (value2.user == data && value2.onRead == false) {
